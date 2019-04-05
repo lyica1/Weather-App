@@ -6,9 +6,10 @@ import android.location.LocationManager;
 import android.os.Bundle;
 
 public class ManageLocation implements LocationListener {
+    Location loc;
     @Override
     public void onLocationChanged(Location location) {
-
+        loc = location;
     }
 
     @Override
@@ -18,6 +19,7 @@ public class ManageLocation implements LocationListener {
 
     @Override
     public void onProviderEnabled(String s) {
+        
     }
 
     @Override
@@ -26,7 +28,6 @@ public class ManageLocation implements LocationListener {
     }
 
     public Location getLocation(LocationManager locationManager, boolean isGPS, boolean isNetwork) {
-        Location loc = null;
         try {
             if (isGPS) {
                 locationManager.requestLocationUpdates(

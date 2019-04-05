@@ -18,6 +18,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
     TextView textView, textView2, textView3, textView4, textView5, textView6, textView7;
     Location loc;
+    static WeatherData weatherData;
     final String[] Days = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +33,7 @@ public class MainActivity extends AppCompatActivity {
         textView7 = findViewById(R.id.textView7);
         InitializeDays();
         ManageLocation locationListener = new ManageLocation();
-        if(CheckPermission(locationListener)) {
-            //textView.setText(loc.toString());
-        }
+        CheckPermission(locationListener);
         String url = "https://api.darksky.net/forecast/d1f231c034c0f2bb4a95c4bf057b224e/" + loc.getLatitude() + "," + loc.getLongitude();
         new APIRequest().execute(url);
     }
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public boolean CheckPermission(ManageLocation locationListener) {
+    public void CheckPermission(ManageLocation locationListener) {
         boolean isGPS = false;
         boolean isNetwork = false;
         String[] perm = {Manifest.permission.ACCESS_FINE_LOCATION};
@@ -102,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, perm, 1);
         }
         loc = locationListener.getLocation(manageLocation, isGPS, isNetwork);
-        return true;
+    }
+
+    public static void UpdateUI() {
+
     }
 }
